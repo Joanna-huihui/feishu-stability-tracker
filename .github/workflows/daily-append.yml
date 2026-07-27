@@ -1,0 +1,29 @@
+name: 稳定性测试每日数据补齐
+
+on:
+  schedule:
+    # 每天北京时间 08:00 (UTC 00:00) 执行
+    - cron: '0 0 * * *'
+  # 支持手动触发
+  workflow_dispatch:
+
+jobs:
+  fill-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run auto fill script
+        env:
+          FEISHU_APP_ID: ${{ secrets.FEISHU_APP_ID }}
+          FEISHU_APP_SECRET: ${{ secrets.FEISHU_APP_SECRET }}
+        run: python3 auto_fill.py
