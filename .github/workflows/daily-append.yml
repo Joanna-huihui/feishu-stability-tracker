@@ -1,13 +1,17 @@
-name: 稳定性测试每日数据补齐
+name: 飞书表格每日数据自动补齐
 
 on:
   schedule:
     # 北京时间 08:00 (UTC 00:00) 主触发
     - cron: '0 0 * * *'
-    # 北京时间 09:00 (UTC 01:00) 补偿触发（防止主触发延迟或失败）
+    # 北京时间 09:00 (UTC 01:00) 补偿触发
     - cron: '0 1 * * *'
-  # 支持手动触发
   workflow_dispatch:
+    inputs:
+      config_file:
+        description: 'JSON配置文件路径（可选，默认运行所有config_*.json）'
+        required: false
+        default: ''
 
 jobs:
   fill-data:
@@ -24,8 +28,23 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
-      - name: Run auto fill script
+      - name: Run auto fill - original project
+        if: ${{ github.event.inputs.config_file == '' || github.event.inputs.config_file == 'config.json' }}
         env:
           FEISHU_APP_ID: ${{ secrets.FEISHU_APP_ID }}
           FEISHU_APP_SECRET: ${{ secrets.FEISHU_APP_SECRET }}
-        run: python3 auto_fill.py
+        run: python3 auto_fill.py --config config.json
+
+      - name: Run auto fill - Taylor (泰勒士)
+        if: ${{ github.event.inputs.config_file == '' || github.event.inputs.config_file == 'config_taylor.json' }}
+        env:
+          FEISHU_APP_ID: ${{ secrets.FEISHU_APP_ID }}
+          FEISHU_APP_SECRET: ${{ secrets.FEISHU_APP_SECRET }}
+        run: python3 auto_fill.py --config config_taylor.json
+
+      - name: Run auto fill - Sanger (桑格)
+        if: ${{ github.event.inputs.config_file == '' || github.event.inputs.config_file == 'config_sanger.json' }}
+        env:
+          FEISHU_APP_ID: ${{ secrets.FEISHU_APP_ID }}
+          FEISHU_APP_SECRET: ${{ secrets.FEISHU_APP_SECRET }}
+        run: python3 auto_fill.py --config config_sanger.json
