@@ -1,0 +1,16 @@
+{
+    "spreadsheet_token": "Qd8os1bNMhtQggtHSQscqypwnZb",
+    "sheet_id": "15bd2e",
+    "start_date": "2026-08-03",
+    "test_items": [
+        "建图", "清扫", "定位", "重定位", "配网&连接", "OTA",
+        "避障", "地毯", "污渍", "颗粒物", "视频管家", "即时清洁",
+        "ERP", "YIKO唤醒转向", "可通过性", "开机速度",
+        "全嵌基站配对&重连", "全嵌舱门"
+    ],
+    "columns": 14,
+    "bg_colors": [
+        "#E3F2FD", "#E8F5E9", "#FFF3E0", "#F3E5F5", "#FFFDE7",
+        "#FBE9E7", "#E0F7FA", "#F1F8E9", "#FCE4EC", "#E8EAF6"
+    ]
+}
