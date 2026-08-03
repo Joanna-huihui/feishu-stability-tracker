@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       config_file:
-        description: 'JSON配置文件路径（可选，默认运行所有config_*.json）'
+        description: 'JSON配置文件路径（可选，默认运行所有项目）'
         required: false
         default: ''
 
@@ -28,23 +28,30 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
-      - name: Run auto fill - original project
+      - name: Run auto fill - 普朗克
         if: ${{ github.event.inputs.config_file == '' || github.event.inputs.config_file == 'config.json' }}
         env:
           FEISHU_APP_ID: ${{ secrets.FEISHU_APP_ID }}
           FEISHU_APP_SECRET: ${{ secrets.FEISHU_APP_SECRET }}
         run: python3 auto_fill.py --config config.json
 
-      - name: Run auto fill - Taylor (泰勒士)
+      - name: Run auto fill - 泰勒士
         if: ${{ github.event.inputs.config_file == '' || github.event.inputs.config_file == 'config_taylor.json' }}
         env:
           FEISHU_APP_ID: ${{ secrets.FEISHU_APP_ID }}
           FEISHU_APP_SECRET: ${{ secrets.FEISHU_APP_SECRET }}
         run: python3 auto_fill.py --config config_taylor.json
 
-      - name: Run auto fill - Sanger (桑格)
+      - name: Run auto fill - 桑格
         if: ${{ github.event.inputs.config_file == '' || github.event.inputs.config_file == 'config_sanger.json' }}
         env:
           FEISHU_APP_ID: ${{ secrets.FEISHU_APP_ID }}
           FEISHU_APP_SECRET: ${{ secrets.FEISHU_APP_SECRET }}
         run: python3 auto_fill.py --config config_sanger.json
+
+      - name: Run auto fill - 阿基米德
+        if: ${{ github.event.inputs.config_file == '' || github.event.inputs.config_file == 'config_archimedes.json' }}
+        env:
+          FEISHU_APP_ID: ${{ secrets.FEISHU_APP_ID }}
+          FEISHU_APP_SECRET: ${{ secrets.FEISHU_APP_SECRET }}
+        run: python3 auto_fill.py --config config_archimedes.json
